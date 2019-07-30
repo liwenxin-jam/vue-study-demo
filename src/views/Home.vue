@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <b>{{ food }}</b>
     <button @click="handleClick('back')">返回上一页</button>
     <button @click="handleClick('push')">跳转到parent</button>
     <button @click="handleClick('replace')">替换到parent</button>
@@ -12,8 +13,28 @@ import HelloWorld from "@/components/HelloWorld.vue";
 
 export default {
   name: "home",
+  props: {
+    food: {
+      type: String,
+      default: "apple"
+    }
+  },
   components: {
     HelloWorld
+  },
+  // 渲染该组件路由被确认前会调用
+  beforeRouteEnter(to, from, next) {
+    // 这里无法获取到当前实例 this，通过next回调可以取到当前实例
+    // next();
+    next(vm => {
+      console.log(vm);
+    });
+  },
+  // 编辑了一些内容，用户还没有保存提醒用户是否要保存
+  beforeRouteLeave(to, from, next) {
+    const leave = confirm("您确定要离开吗？");
+    if (leave) next();
+    else next(false);
   },
   methods: {
     handleClick(type) {
