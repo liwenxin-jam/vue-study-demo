@@ -11,6 +11,9 @@ const mutations = {
     // state.appVersion = 'v2.0';
     // 响应式
     vue.set(state, 'appVersion', 'v2.0')
+  },
+  SET_STATE_VALUE(state, params) {
+    state.stateValue = params
   }
 }
 
