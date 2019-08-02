@@ -4,7 +4,8 @@
     <button @click="handleClick('back')">返回上一页</button>
     <button @click="handleClick('push')">跳转到parent</button>
     <button @click="handleClick('replace')">替换到parent</button>
-    <button @click="getInfo">请求数据</button>
+    <button @click="getInfo" :style="{background: bgColor}">请求数据</button>
+    <img :src="url" />
   </div>
 </template>
 
@@ -16,14 +17,20 @@ import { getUserInfo } from "@/api/user";
 
 export default {
   name: "home",
+  components: {
+    HelloWorld
+  },
   props: {
     food: {
       type: String,
       default: "apple"
     }
   },
-  components: {
-    HelloWorld
+  data() {
+    return {
+      url: "",
+      bgColor: ""
+    };
   },
   // 渲染该组件路由被确认前会调用
   beforeRouteEnter(to, from, next) {
@@ -63,7 +70,10 @@ export default {
       // });
 
       getUserInfo({ userId: 123 }).then(res => {
-        console.log("res:", res);
+        let data = res.data;
+        console.log("res:", data);
+        this.url = data.img;
+        this.bgColor = data.color;
       });
     }
   }

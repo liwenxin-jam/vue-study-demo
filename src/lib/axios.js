@@ -19,7 +19,7 @@ class HttpRequest {
     instance.interceptors.request.use(config => {
       // 添加全局的loading
       // Spin.show()
-      console.log(config)
+      // console.log(config)
       if (!Object.keys(this.queue).length) {
         //Spin.show()
       }
