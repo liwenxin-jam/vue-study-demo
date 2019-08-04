@@ -37,6 +37,11 @@ export default [{
   props: true // 用params作为组件的传入属性
 },
 {
+  path: '/count-to',
+  name: 'count_to',
+  component: () => import('@/views/count-to.vue')
+},
+{
   path: '/parent',
   name: 'parent',
   component: () => import('@/views/parent.vue'),
