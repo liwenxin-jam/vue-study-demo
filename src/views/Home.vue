@@ -6,6 +6,7 @@
     <button @click="handleClick('replace')">替换到parent</button>
     <button @click="getInfo" :style="{background: bgColor}">请求数据</button>
     <img :src="url" />
+    <button @click="handleLogout">退出登录</button>
   </div>
 </template>
 
@@ -14,6 +15,7 @@
 import HelloWorld from "@/components/HelloWorld.vue";
 import axios from "axios";
 import { getUserInfo } from "@/api/user";
+import { mapState, mapActions } from 'vuex'
 
 export default {
   name: "home",
@@ -41,12 +43,15 @@ export default {
     });
   },
   // 编辑了一些内容，用户还没有保存提醒用户是否要保存
-  beforeRouteLeave(to, from, next) {
-    const leave = confirm("您确定要离开吗？");
-    if (leave) next();
-    else next(false);
-  },
+  // beforeRouteLeave(to, from, next) {
+  //   const leave = confirm("您确定要离开吗？");
+  //   if (leave) next();
+  //   else next(false);
+  // },
   methods: {
+    ...mapActions('user', [
+      'logout'
+    ]),
     handleClick(type) {
       // this.$router.go(-1);
       if (type === "back") {
@@ -75,6 +80,12 @@ export default {
         this.url = data.img;
         this.bgColor = data.color;
       });
+    },
+    handleLogout () {
+      this.logout()
+      this.$router.push({
+        name: 'login'
+      })
     }
   }
 };

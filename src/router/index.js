@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import routes from './router'
-import { setTitle } from '@/lib/util'
+import store from '@/store'
+import { setTitle, setToken, getToken } from '@/lib/util'
 
 Vue.use(Router)
 
@@ -11,18 +12,32 @@ const router = new Router({
 })
 
 // 是否登录过
-const HAS_LOGING = true;
+const HAS_LOGING = false;
 
 // 全局前置守卫，能阻止页面跳转
 router.beforeEach((to, from, next) => {
   // if(to.meta.title)
   to.meta && setTitle(to.meta.title);
-  if (to.name !== 'login') {
-    if (HAS_LOGING) next();
-    else next({ name: 'login' }); // next() 用法与 $router.push() 用法一致
+  // if (to.name !== 'login') {
+  //   if (HAS_LOGING) next();
+  //   else next({ name: 'login' }); // next() 用法与 $router.push() 用法一致
+  // } else {
+  //   if (HAS_LOGING) next({ name: 'home' });
+  //   else next();
+  // }
+
+  const token = getToken()
+  if (token) {
+    store.dispatch('user/authorization', token).then(() => {
+      if (to.name === 'login') next({ name: 'home' })
+      else next()
+    }).catch(() => {
+      setToken('')
+      next({ name: 'login' })
+    })
   } else {
-    if (HAS_LOGING) next({ name: 'home' });
-    else next();
+    if (to.name === 'login') next()
+    else next({ name: 'login' })
   }
 })
 

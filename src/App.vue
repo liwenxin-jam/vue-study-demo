@@ -1,10 +1,11 @@
 <template>
   <div id="app">
-    <div id="nav">
+    <!--<div id="nav">
       <router-link to="/">Home</router-link>|
-      <!-- <router-link to="/about">About</router-link> -->
+       <router-link to="/about">About</router-link>
       <router-link :to="{ name: 'about' }">About</router-link>
-    </div>
+    </div>-->
+
     <!-- 单个router-view只需要transition组件包住即可  -->
     <!-- <transition-group name="router"> -->
     <transition-group :name="routerTransition">
