@@ -12,33 +12,33 @@ const router = new Router({
 })
 
 // 是否登录过
-const HAS_LOGING = false;
+const HAS_LOGING = true;
 
 // 全局前置守卫，能阻止页面跳转
 router.beforeEach((to, from, next) => {
   // if(to.meta.title)
   to.meta && setTitle(to.meta.title);
-  // if (to.name !== 'login') {
-  //   if (HAS_LOGING) next();
-  //   else next({ name: 'login' }); // next() 用法与 $router.push() 用法一致
-  // } else {
-  //   if (HAS_LOGING) next({ name: 'home' });
-  //   else next();
-  // }
-
-  const token = getToken()
-  if (token) {
-    store.dispatch('user/authorization', token).then(() => {
-      if (to.name === 'login') next({ name: 'home' })
-      else next()
-    }).catch(() => {
-      setToken('')
-      next({ name: 'login' })
-    })
+  if (to.name !== 'login') {
+    if (HAS_LOGING) next();
+    else next({ name: 'login' }); // next() 用法与 $router.push() 用法一致
   } else {
-    if (to.name === 'login') next()
-    else next({ name: 'login' })
+    if (HAS_LOGING) next({ name: 'home' });
+    else next();
   }
+
+  // const token = getToken()
+  // if (token) {
+  //   store.dispatch('user/authorization', token).then(() => {
+  //     if (to.name === 'login') next({ name: 'home' })
+  //     else next()
+  //   }).catch(() => {
+  //     setToken('')
+  //     next({ name: 'login' })
+  //   })
+  // } else {
+  //   if (to.name === 'login') next()
+  //   else next({ name: 'login' })
+  // }
 })
 
 // 全局守卫，所有导航被确认之前 或者异步组件渲染前
