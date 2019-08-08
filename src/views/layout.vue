@@ -3,7 +3,7 @@
     <Layout class="layout-outer">
       <!-- breakpoint="sm" 当浏览器宽度小于设定值，就会自动把side收缩起来 xs: '480px',sm: '576px',md: '768px',lg: '992px',xl: '1200px',xxl: '1600px' -->
       <Sider :width="200" collapsible hide-trigger reverse-arrow v-model="collapsed" class="sider-outer">
-
+        <side-menu :collapsed="collapsed" :list="menuList"></side-menu>
       </Sider>
       <Layout>
         <Header class="header-wrapper">
@@ -22,10 +22,48 @@
 </template>
 
 <script>
+  import SideMenu from '_c/side-menu'
+
   export default {
+    components: {
+      SideMenu
+    },
     data() {
       return {
-        collapsed: false
+        collapsed: false,
+        menuList: [{
+            title: '1',
+            name: 'menu1',
+            icon: 'ios-alarm'
+          }, {
+            title: '2',
+            name: 'menu2',
+            icon: 'ios-alarm'
+          },
+          {
+            title: '3',
+            name: 'menu3',
+            icon: 'ios-alarm',
+            children: [{
+              title: '1-1',
+              name: 'menu11',
+              icon: 'ios-alarm'
+            }, {
+              title: '1-2',
+              name: 'menu12',
+              icon: 'ios-alarm',
+              children: [{
+                title: '1-2-1',
+                name: 'menu121',
+                icon: 'ios-alarm'
+              }, {
+                title: '1-2-2',
+                name: 'menu122',
+                icon: 'ios-alarm'
+              }]
+            }]
+          }
+        ]
       }
     },
     computed: {
@@ -35,13 +73,13 @@
     },
     methods: {
       handleCollapsed() {
-        this.collapsed = !this.handleCollapsed;
+        this.collapsed = !this.collapsed;
       }
     }
   }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
   .layout-wrapper,
   .layout-outer {
     height: 100%;

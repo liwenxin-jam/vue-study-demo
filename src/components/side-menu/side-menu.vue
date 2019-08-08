@@ -1,0 +1,67 @@
+<template>
+  <div class="side-menu-wrapper">
+    <slot></slot>
+    <Menu v-show="!collapsed" ref="menu" width="auto" theme="dark">
+      <template v-for="item in list">
+        <!-- 只能处理一级嵌套，多级需要递归组件实现 -->
+        <!-- <Submenu v-if="item.children" :key="`menu_${item.name}`" :name="item.name"></Submenu> -->
+        <re-submenu v-if="item.children" :key="`menu_${item.name}`" :name="item.name" :parent="item"></re-submenu>
+        <menu-item v-else :key="`menu_${item.name}`" :name="item.name">{{item.title}}</menu-item>
+      </template>
+    </Menu>
+    <div v-show="collapsed" class="drop-wrapper">
+      <template v-for="item in list">
+        <Tooltip transfer :content="item.title" placement="right" :key="`drop_${item.name}`">
+          <span @click="handleClick(item.name)" class="drop-menu-span">
+            <Icon :type="item.icon" color="#fff" :size="20"></Icon>
+          </span>
+        </Tooltip>
+      </template>
+    </div>
+  </div>
+</template>
+
+<script>
+  import ReSubmenu from './re-submenu.vue'
+  export default {
+    name: 'SideMenu',
+    components: {
+      ReSubmenu
+    },
+    props: {
+      collapsed: {
+        type: Boolean,
+        default: false
+      },
+      list: {
+        type: Array,
+        default: () => []
+      }
+    },
+    methods: {
+      handleClick(name) {
+        console.log(name)
+      }
+    }
+  }
+</script>
+
+<style lang="scss">
+  .side-menu-wrapper {
+    width: 100%;
+
+    .ivu-tooltip,
+    .drop-menu-span {
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding: 5px 0;
+    }
+
+    .drop-wrapper>.ivu-dropdown {
+      display: block;
+      padding: 5px;
+      margin: 0 auto;
+    }
+  }
+</style>
