@@ -1,7 +1,7 @@
 <template>
   <div class="side-menu-wrapper">
     <slot></slot>
-    <Menu v-show="!collapsed" ref="menu" width="auto" theme="dark">
+    <Menu v-show="!collapsed" ref="menu" width="auto" theme="dark" @on-select="handleSelect">
       <template v-for="item in list">
         <!-- 只能处理一级嵌套，多级需要递归组件实现 -->
         <!-- <Submenu v-if="item.children" :key="`menu_${item.name}`" :name="item.name"></Submenu> -->
@@ -11,7 +11,8 @@
     </Menu>
     <div v-show="collapsed" class="drop-wrapper">
       <template v-for="item in list">
-        <Tooltip transfer :content="item.title" placement="right" :key="`drop_${item.name}`">
+        <re-dropdown @on-select="handleSelect" v-if="item.children" :show-title="false" icon-color="#fff" :key="`drop_${item.name}`" :parent="item"></re-dropdown>
+        <Tooltip v-else transfer :content="item.title" placement="right" :key="`drop_${item.name}`">
           <span @click="handleClick(item.name)" class="drop-menu-span">
             <Icon :type="item.icon" color="#fff" :size="20"></Icon>
           </span>
@@ -23,10 +24,13 @@
 
 <script>
   import ReSubmenu from './re-submenu.vue'
+  import ReDropdown from './re-dropdown.vue'
+
   export default {
     name: 'SideMenu',
     components: {
-      ReSubmenu
+      ReSubmenu,
+      ReDropdown
     },
     props: {
       collapsed: {
@@ -39,6 +43,11 @@
       }
     },
     methods: {
+      handleSelect(name) {
+        this.$router.push({
+          name
+        })
+      },
       handleClick(name) {
         console.log(name)
       }
