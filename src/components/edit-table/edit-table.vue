@@ -1,8 +1,9 @@
 <template>
-  <Table :columns="columns" :data="data"></Table>
+  <Table :columns="insideColumns" :data="value"></Table>
 </template>
 
 <script>
+  import clonedeep from 'clonedeep'
   export default {
     name: 'EditTable',
     props: {
@@ -10,7 +11,7 @@
         type: Array,
         default: () => []
       },
-      data: {
+      value: {
         type: Array,
         default: () => []
       }
@@ -27,10 +28,27 @@
       this.handleColumns()
     },
     methods: {
+      handleClick ({ row, index, column }) {
+        console.log({ row, index, column })
+        if (this.edittingId === `${column.key}_${index}`) {
+          let tableData = clonedeep(this.value)
+          tableData[index][column.key] = this.edittingContent
+          this.$emit('input', tableData)
+          this.$emit('on-edit', { row, index, column, newValue: this.edittingContent })
+          this.edittingId = ''
+          this.edittingContent = ''
+        } else {
+          this.edittingId = `${column.key}_${index}`
+        }
+      },
+      handleInput (newValue) {
+        this.edittingContent = newValue
+      },
       handleColumns() {
         const insideColumns = this.columns.map(item => {
           if (!item.render && item.editable) {
             item.render = (h, { row, index, column }) => {
+              // console.log(row, index, column)
               const isEditting = this.edittingId === `${column.key}_${index}`
               return (
                 <div>
@@ -43,6 +61,11 @@
           } else return item
         })
         this.insideColumns = insideColumns
+      }
+    },
+    watch: {
+      columns () {
+        this.handleColumns()
       }
     }
   }
