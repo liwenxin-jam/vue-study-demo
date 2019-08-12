@@ -1,5 +1,6 @@
 import Mock from 'mockjs'
-import { getUserInfo } from './response/user'
+import { getUserInfo, login, authorization } from './response/user'
+import { getTableData, getFileList, getFolderList } from './response/data'
 
 const Random = Mock.Random;
 
@@ -18,5 +19,8 @@ Random.extend({
 // Mock.mock('http://localhost:3000/getUserInfo', getUserInfo)
 Mock.mock(/\/getUserInfo/, getUserInfo)
 // Mock.mock(/\/getUserInfo/, { name: 'jam' })
+Mock.mock(/\/login/, 'post', login)
+Mock.mock(/\/authorization/, 'get', authorization)
+Mock.mock(/\/getTableData/, 'get', getTableData)
 
 export default Mock

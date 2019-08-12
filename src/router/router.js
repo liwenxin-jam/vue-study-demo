@@ -58,6 +58,24 @@ export default [{
     component: () => import('@/views/menu-page.vue')
   },
   {
+    path: '/component',
+    name: 'component',
+    component: Layout,
+    meta: {
+      title: '表格'
+    },
+    children: [
+      {
+        path: 'table',
+        name: 'table_page',
+        meta: {
+          title: '表格'
+        },
+        component: () => import('@/views/table.vue')
+      }
+    ]
+  },
+  {
     path: '/render-page',
     name: 'render_page',
     component: () => import('@/views/render-page.vue')
