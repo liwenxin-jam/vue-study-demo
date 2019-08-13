@@ -14,16 +14,14 @@ export default [{
     //   // else alert('这不是从登录页进来的');
     //   next(); // 必须执行 next() 否则不会跳转页面
     // }
-    children: [
-      {
-        path: 'home_index',
-        name: 'home_index',
-        meta: {
-          title: '首页'
-        },
-        component: Home
-      }
-    ]
+    children: [{
+      path: 'home_index',
+      name: 'home_index',
+      meta: {
+        title: '首页'
+      },
+      component: Home
+    }]
   },
   {
     path: '/login',
@@ -64,14 +62,21 @@ export default [{
     meta: {
       title: '表格'
     },
-    children: [
-      {
+    children: [{
         path: 'table',
         name: 'table_page',
         meta: {
           title: '表格'
         },
         component: () => import('@/views/table.vue')
+      },
+      {
+        path: 'folder_tree',
+        name: 'folder_tree',
+        meta: {
+          title: '文件夹'
+        },
+        component: () => import('@/views/folder-tree/folder-tree.vue')
       }
     ]
   },
