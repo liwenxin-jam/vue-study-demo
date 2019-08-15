@@ -56,6 +56,14 @@ export default [{
     component: () => import('@/views/menu-page.vue')
   },
   {
+    path: '/upload',
+    name: 'upload',
+    meta: {
+      title: 'upload'
+    },
+    component: () => import('@/views/upload.vue')
+  },
+  {
     path: '/component',
     name: 'component',
     component: Layout,
