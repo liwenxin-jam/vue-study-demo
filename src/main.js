@@ -7,7 +7,7 @@ import Bus from './lib/bus'
 import iview from 'iview'
 import 'iview/dist/styles/iview.css'
 
-if (process.env.NODE_ENV !== 'production') require('./mock')
+// if (process.env.NODE_ENV !== 'production') require('./mock')
 
 Vue.prototype.$bus = Bus
 Vue.use(iview)
