@@ -35,7 +35,7 @@ class HttpRequest {
       return res
     }, error => {
       delete this.queue[url]
-      return Promise.reject(error)
+      return Promise.reject(error.response)
     })
   }
   request(options) {
