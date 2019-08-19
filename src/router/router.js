@@ -1,7 +1,7 @@
 import Home from '../views/Home.vue'
 import Layout from '@/views/layout.vue'
 
-export default [{
+export const routerMap = [{
     path: '/home',
     // alias: '/home_page', // 设置访问别名
     name: 'home',
@@ -22,11 +22,6 @@ export default [{
       },
       component: Home
     }]
-  },
-  {
-    path: '/login',
-    name: 'login',
-    component: () => import('@/views/login.vue')
   },
   {
     path: '/about',
@@ -138,8 +133,14 @@ export default [{
   }, {
     path: '/store',
     component: () => import('@/views/store.vue')
-  }, {
-    path: '*',
-    component: () => import('@/views/error_404.vue')
   }
 ]
+
+export const routes = [{
+  path: '/login',
+  name: 'login',
+  component: () => import('@/views/login.vue')
+}, {
+  path: '*',
+  component: () => import('@/views/error_404.vue')
+}]
