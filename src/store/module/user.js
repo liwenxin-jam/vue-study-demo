@@ -2,7 +2,8 @@ import { login, authorization } from '@/api/user'
 import { setToken } from '@/lib/util'
 
 const state = {
-  userName: 'Jam'
+  userName: 'Jam',
+  rules: {}
 }
 
 const getters = {
@@ -14,6 +15,9 @@ const getters = {
 const mutations = {
   SET_USER_NAME(state, params) {
     state.userName = params;
+  },
+  SET_RULES(state, rules) {
+    state.rules = rules;
   }
 }
 
@@ -49,7 +53,7 @@ const actions = {
         } else {
           setToken(res.data.token)
           resolve(res.data.rules.page)
-          // commit('SET_RULES', res.data.rules.component)
+          commit('SET_RULES', res.data.rules.component)
         }
       }).catch(error => {
         reject(error)
