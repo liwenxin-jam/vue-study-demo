@@ -7,6 +7,13 @@ import Bus from './lib/bus'
 import iview from 'iview'
 import 'iview/dist/styles/iview.css'
 
+import '@/assets/font/iconfont.js' // symbol引用
+import '@/assets/font/iconfont.css' // font-class引用
+import IconFont from '_c/icon-font'
+import IconSvg from '_c/icon-svg'
+Vue.component('icon-font', IconFont)
+Vue.component('icon-svg', IconSvg)
+
 if (process.env.NODE_ENV !== 'production') require('./mock')
 
 Vue.prototype.$bus = Bus
