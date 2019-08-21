@@ -1,5 +1,6 @@
 import Cookies from 'js-cookie'
 import clonedeep from 'clonedeep'
+import { doCustomTimes, objEqual } from './tools'
 
 export const setTitle = (title) => {
   window.document.title = title || 'admin';

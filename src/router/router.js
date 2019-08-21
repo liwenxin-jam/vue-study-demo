@@ -40,15 +40,15 @@ export const routerMap = [{
       title: '关于'
     }
   },
-  {
-    path: '/argu/:name',
-    name: 'argu',
-    meta: {
-      title: 'argu'
-    },
-    component: () => import('@/views/argu.vue'),
-    props: true // 用params作为组件的传入属性
-  },
+  // {
+  //   path: '/argu/:name',
+  //   name: 'argu',
+  //   meta: {
+  //     title: 'argu'
+  //   },
+  //   component: () => import('@/views/argu.vue'),
+  //   props: true // 用params作为组件的传入属性
+  // },
   {
     path: '/count-to',
     name: 'count_to',
@@ -111,6 +111,15 @@ export const routerMap = [{
           title: '文件夹'
         },
         component: () => import('@/views/folder-tree/folder-tree.vue')
+      },
+      {
+        path: '/params/:id',
+        name: 'params',
+        meta: {
+          title: '参数'
+        },
+        component: () => import('@/views/argu.vue'),
+        props: true // 用params作为组件的传入属性
       }
     ]
   },

@@ -17,6 +17,8 @@
 </template>
 
 <script>
+  import { mapMutations } from 'vuex'
+
   export default {
     data() {
       return {
@@ -25,9 +27,17 @@
     },
     watch: {
       // 为某个特定的路由设定特殊的动画效果
-      "$route"(to) {
-        to.query && to.query.transitionName && (this.routerTransition = to.query.transitionName)
+      // "$route"(to) {
+      //   to.query && to.query.transitionName && (this.routerTransition = to.query.transitionName)
+      // }
+      '$route' (newRoute) {
+        this.UPDATE_ROUTER(newRoute)
       }
+    },
+    methods: {
+      ...mapMutations([
+        'UPDATE_ROUTER'
+      ])
     }
   };
 </script>

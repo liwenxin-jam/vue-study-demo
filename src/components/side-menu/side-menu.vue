@@ -1,7 +1,7 @@
 <template>
   <div class="side-menu-wrapper">
     <slot></slot>
-    <Menu v-show="!collapsed" ref="menu" width="auto" theme="dark" @on-select="handleSelect">
+    <Menu ref="menu" :active-name="$route.name" :open-names="openNames" v-show="!collapsed" width="auto" theme="dark" @on-select="handleSelect">
       <template v-for="item in list">
         <!-- 只能处理一级嵌套，多级需要递归组件实现 -->
         <!-- <Submenu v-if="item.children" :key="`menu_${item.name}`" :name="item.name"></Submenu> -->
@@ -25,6 +25,8 @@
 <script>
   import ReSubmenu from './re-submenu.vue'
   import ReDropdown from './re-dropdown.vue'
+  import { mapState } from 'vuex'
+  import { getOpenArrByName } from '@/lib/util'
 
   export default {
     name: 'SideMenu',
@@ -40,6 +42,21 @@
       list: {
         type: Array,
         default: () => []
+      }
+    },
+    computed: {
+      ...mapState({
+        routers: state => state.router.routers
+      }),
+      openNames () {
+        return getOpenArrByName(this.$route.name, this.routers)
+      }
+    },
+    watch: {
+      openNames () {
+        this.$nextTick(() => {
+          this.$refs.menu.updateOpened()
+        })
       }
     },
     methods: {
