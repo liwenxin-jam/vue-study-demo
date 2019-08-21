@@ -6,13 +6,13 @@
         <!-- 只能处理一级嵌套，多级需要递归组件实现 -->
         <!-- <Submenu v-if="item.children" :key="`menu_${item.name}`" :name="item.name"></Submenu> -->
         <re-submenu v-if="item.children" :key="`menu_${item.name}`" :name="item.name" :parent="item"></re-submenu>
-        <menu-item v-else :key="`menu_${item.name}`" :name="item.name">{{item.title}}</menu-item>
+        <menu-item v-else :key="`menu_${item.name}`" :name="item.name">{{item.meta.title}}</menu-item>
       </template>
     </Menu>
     <div v-show="collapsed" class="drop-wrapper">
       <template v-for="item in list">
         <re-dropdown @on-select="handleSelect" v-if="item.children" :show-title="false" icon-color="#fff" :key="`drop_${item.name}`" :parent="item"></re-dropdown>
-        <Tooltip v-else transfer :content="item.title" placement="right" :key="`drop_${item.name}`">
+        <Tooltip v-else transfer :content="item.meta.title" placement="right" :key="`drop_${item.name}`">
           <span @click="handleClick(item.name)" class="drop-menu-span">
             <Icon :type="item.icon" color="#fff" :size="20"></Icon>
           </span>

@@ -11,7 +11,7 @@ import router from './module/router'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  strict: process.env.NODE_ENV === 'development', // 严格模式，默认false
+  // strict: process.env.NODE_ENV === 'development', // 严格模式，默认false
   state,
   getters,
   mutations,
